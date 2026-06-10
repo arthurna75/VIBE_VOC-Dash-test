@@ -12,14 +12,19 @@ load_dotenv(override=True)
 matplotlib.rc('font', family='Malgun Gothic')
 matplotlib.rcParams['axes.unicode_minus'] = False
 
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 @st.cache_data
 def load_all_data():
-    customers   = pd.read_csv('customers.csv',   encoding='utf-8-sig')
-    complaints  = pd.read_csv('complaints.csv',  encoding='utf-8-sig')
-    feedback    = pd.read_csv('feedback.csv',    encoding='utf-8-sig')
-    call_logs   = pd.read_csv('call_logs.csv',   encoding='utf-8-sig')
-    as_requests = pd.read_csv('as_requests.csv', encoding='utf-8-sig')
-    usage_data  = pd.read_csv('usage_data.csv',  encoding='utf-8-sig')
+    def _csv(name):
+        return os.path.join(_BASE_DIR, name)
+
+    customers   = pd.read_csv(_csv('customers.csv'),   encoding='utf-8-sig')
+    complaints  = pd.read_csv(_csv('complaints.csv'),  encoding='utf-8-sig')
+    feedback    = pd.read_csv(_csv('feedback.csv'),    encoding='utf-8-sig')
+    call_logs   = pd.read_csv(_csv('call_logs.csv'),   encoding='utf-8-sig')
+    as_requests = pd.read_csv(_csv('as_requests.csv'), encoding='utf-8-sig')
+    usage_data  = pd.read_csv(_csv('usage_data.csv'),  encoding='utf-8-sig')
 
     # 날짜 파싱
     customers['가입일']       = pd.to_datetime(customers['가입일'])
