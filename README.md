@@ -29,16 +29,17 @@ cd VIBE_VOC-Dash-test
 pip install -r requirements.txt
 ```
 
-### 3. 환경변수 설정
+### 3. API 키 설정
 
-프로젝트 루트에 `.env` 파일을 생성하고 아래 내용을 입력합니다.
+`.streamlit/secrets.toml` 파일을 생성하고 아래 내용을 입력합니다.
 
+```toml
+GEMINI_API_KEY = "your_gemini_api_key_here"
+GEMINI_MODEL   = "gemini-flash-latest"
 ```
-GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-flash-latest
-```
 
-> Gemini API 키는 [Google AI Studio](https://aistudio.google.com/app/apikey)에서 발급받을 수 있습니다.
+> Gemini API 키는 [Google AI Studio](https://aistudio.google.com/app/apikey)에서 발급받을 수 있습니다.  
+> `secrets.toml`은 `.gitignore`에 포함되어 있어 GitHub에 올라가지 않습니다.
 
 ### 4. 실행
 

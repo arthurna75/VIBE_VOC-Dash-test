@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
 import sys, os
-from dotenv import load_dotenv
-
-load_dotenv(override=True)
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from utils import load_all_data, build_data_context
@@ -17,8 +14,8 @@ customers, complaints, feedback, call_logs, as_requests, usage_data = load_all_d
 data_context = build_data_context(customers, complaints, feedback, call_logs, as_requests, usage_data)
 
 # ── Gemini 클라이언트 초기화 ──────────────────────────────
-api_key = os.getenv("GEMINI_API_KEY")
-model_name = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
+api_key = st.secrets.get("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY")
+model_name = st.secrets.get("GEMINI_MODEL") or os.getenv("GEMINI_MODEL", "gemini-flash-latest")
 
 model_ok = False
 client = None

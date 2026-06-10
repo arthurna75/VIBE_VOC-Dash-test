@@ -4,9 +4,6 @@ import matplotlib.pyplot as plt
 import matplotlib
 import streamlit as st
 import os
-from dotenv import load_dotenv
-
-load_dotenv(override=True)
 
 # 한글 폰트 설정
 matplotlib.rc('font', family='Malgun Gothic')
@@ -115,11 +112,11 @@ def build_data_context(customers, complaints, feedback, call_logs, as_requests, 
 @st.cache_resource
 def get_gemini_client():
     from google import genai
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = st.secrets.get("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY")
     if not api_key:
-        raise ValueError("GEMINI_API_KEY가 .env 파일에 설정되지 않았습니다.")
+        raise ValueError("GEMINI_API_KEY가 secrets.toml 또는 환경변수에 설정되지 않았습니다.")
     return genai.Client(api_key=api_key)
 
 
 def get_gemini_model_name():
-    return os.getenv("GEMINI_MODEL", "gemini-flash-latest")
+    return st.secrets.get("GEMINI_MODEL") or os.getenv("GEMINI_MODEL", "gemini-flash-latest")
